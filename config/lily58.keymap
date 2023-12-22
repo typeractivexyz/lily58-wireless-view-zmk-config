@@ -33,6 +33,21 @@
 
             label = "SPOTLIGHT";
         };
+
+        SCREENSHOT_WIN: SCREENSHOT_WIN {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_press>,
+                <&kp LEFT_SHIFT &kp LEFT_GUI>,
+                <&macro_wait_time 50>,
+                <&macro_tap>,
+                <&kp S>,
+                <&macro_release>,
+                <&kp LEFT_SHIFT &kp LEFT_GUI>;
+
+            label = "SCREENSHOT_WIN";
+        };
     };
 
     keymap {
