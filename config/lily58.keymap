@@ -26,11 +26,11 @@
         lower_layer {
             label = "Lower";
             bindings = <
-&trans     &trans           &trans       &trans    &trans      &trans                         &trans     &trans             &trans        &trans                &trans                 &trans
-&kp GRAVE  &kp EXCLAMATION  &kp AT_SIGN  &kp HASH  &kp DOLLAR  &kp PERCENT                    &kp CARET  &kp AMPERSAND      &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp NON_US_BACKSLASH
-&trans     &trans           &trans       &trans    &trans      &trans                         &kp GRAVE  &kp SQT            &kp COLON     &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp PIPE
-&trans     &trans           &trans       &trans    &trans      &trans       &trans    &trans  &kp TILDE  &kp DOUBLE_QUOTES  &kp SLASH     &kp LBRC              &kp RBRC               &trans
-                                         &trans    &trans      &trans       &trans    &trans  &trans     &trans             &trans
+&trans     &trans           &trans       &trans    &trans          &trans                         &trans     &trans             &trans        &trans                &trans                 &trans
+&kp GRAVE  &kp EXCLAMATION  &kp AT_SIGN  &kp HASH  &kp DOLLAR      &kp PERCENT                    &kp CARET  &kp AMPERSAND      &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp NON_US_BACKSLASH
+&trans     &trans           &trans       &trans    &kp MINUS       &kp EQUAL                      &kp GRAVE  &kp SQT            &kp COLON     &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp PIPE
+&trans     &trans           &trans       &trans    &kp UNDERSCORE  &kp PLUS     &trans    &trans  &kp TILDE  &kp DOUBLE_QUOTES  &kp SLASH     &kp LBRC              &kp RBRC               &trans
+                                         &trans    &trans          &trans       &trans    &trans  &trans     &trans             &trans
             >;
         };
 
