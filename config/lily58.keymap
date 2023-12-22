@@ -9,6 +9,15 @@
 #include <dt-bindings/zmk/keys.h>
 
 / {
+    combos {
+        compatible = "zmk,combos";
+
+        combo_DEL {
+            bindings = <&kp DEL>;
+            key-positions = <10 11>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
