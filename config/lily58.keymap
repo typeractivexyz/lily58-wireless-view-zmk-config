@@ -63,6 +63,28 @@
 
             label = "SCREENSHOT_MAC";
         };
+
+        TERMINAL_WIN: TERMINAL_WIN {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_press>,
+                <&kp LEFT_GUI>,
+                <&macro_wait_time 50>,
+                <&macro_tap>,
+                <&kp R>,
+                <&macro_wait_time 50>,
+                <&macro_tap>,
+                <&kp BACKSPACE>,
+                <&macro_wait_time 50>,
+                <&macro_tap>,
+                <&kp W &kp T>,
+                <&macro_wait_time 50>,
+                <&macro_tap>,
+                <&kp ENTER>;
+
+            label = "TERMINAL_WIN";
+        };
     };
 
     keymap {
