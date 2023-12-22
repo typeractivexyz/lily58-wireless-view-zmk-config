@@ -73,6 +73,8 @@
                 <&macro_wait_time 50>,
                 <&macro_tap>,
                 <&kp R>,
+                <&macro_release>,
+                <&kp LEFT_GUI>,
                 <&macro_wait_time 50>,
                 <&macro_tap>,
                 <&kp BACKSPACE>,
