@@ -127,16 +127,6 @@
             flavor = "balanced";
             bindings = <&mo>, <&kp>;
         };
-
-        sm: space_mod {
-            compatible = "zmk,behavior-hold-tap";
-            label = "SPACE_MOD";
-            #binding-cells = <2>;
-            tapping-term-ms = <250>;
-            quick-tap-ms = <200>;
-            flavor = "balanced";
-            bindings = <&kp>, <&kp>;
-        };
     };
 
     keymap {
