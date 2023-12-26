@@ -129,28 +129,77 @@
         };
     };
 
+    behaviors {
+        td_multi_win: tap_dance_multi_win {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_MULTI_WIN";
+            #binding-cells = <0>;
+            tapping-term-ms = <300>;
+            bindings = <&sk LEFT_GUI>, <&terminal_win>, <&screenshot_win>;
+        };
+
+        td_multi_mac: tap_dance_multi_mac {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_MULTI_MAC";
+            #binding-cells = <0>;
+            tapping-term-ms = <300>;
+            bindings = <&kp LEFT_GUI>, <&spotlight>, <&screenshot_mac>;
+        };
+
+        cm: code_row_mods {
+            compatible = "zmk,behavior-hold-tap";
+            label = "CODE_ROW_MODS";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <0>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+            retro-tap;
+        };
+
+        bm: bspc_mod {
+            compatible = "zmk,behavior-hold-tap";
+            label = "BSPC_MOD";
+            #binding-cells = <2>;
+            tapping-term-ms = <250>;
+            quick-tap-ms = <200>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+        };
+
+        sm: space_mod {
+            compatible = "zmk,behavior-hold-tap";
+            label = "SPACE_MOD";
+            #binding-cells = <2>;
+            tapping-term-ms = <250>;
+            quick-tap-ms = <200>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         windows_default_layer {
             label = "Windows";
             bindings = <
-&kp ESC           &kp N1  &kp N2  &kp N3    &kp N4    &kp N5                                   &kp N6  &kp N7    &kp N8              &kp N9   &kp N0    &kp GRAVE
-&kp TAB           &kp Q   &kp W   &kp E     &kp R     &kp T                                    &kp Y   &kp U     &kp I               &kp O    &kp P     &kp MINUS
-&kp LEFT_SHIFT    &kp A   &kp S   &kp D     &kp F     &kp G                                    &kp H   &kp J     &kp K               &kp L    &kp SEMI  &kp SQT
-&kp LEFT_CONTROL  &kp Z   &kp X   &kp C     &kp V     &kp B   &kp LEFT_SHIFT    &kp BACKSPACE  &kp N   &kp M     &kp COMMA           &kp DOT  &kp FSLH  &kp RSHFT
-                                  &kp LALT  &kp LGUI  &mo 1   &kp SPACE         &kp RET        &mo 2   &kp BSPC  &kp LC(LEFT_SHIFT)
+&kp ESC           &kp N1  &kp N2  &kp N3        &kp N4        &kp N5                                         &kp N6                  &kp N7              &kp N8     &kp N9   &kp N0         &kp GRAVE
+&kp TAB           &kp Q   &kp W   &kp E         &kp R         &kp T                                          &kp Y                   &kp U               &kp I      &kp O    &kp P          &kp DELETE
+&td_multi_win     &kp A   &kp S   &kp D         &kp F         &kp G                                          &kp H                   &kp J               &kp K      &kp L    &kp SEMICOLON  &kp LC(TAB)
+&kp LEFT_CONTROL  &kp Z   &kp X   &kp C         &kp V         &kp B         &kp LEFT_SHIFT    &kp BACKSPACE  &kp N                   &kp M               &kp COMMA  &kp DOT  &kp SLASH      &kp ESC
+                                                &kp LEFT_ALT  &mo WIN_CODE  &kp SPACE         &kp ENTER      &bm WIN_FUNC BACKSPACE  &kp LC(LEFT_SHIFT)
             >;
         };
 
         windows_code_layer {
             label = "WinCode";
             bindings = <
-&kp GRAVE  &kp EXCLAMATION  &kp AT_SIGN  &kp HASH  &kp DOLLAR      &kp PERCENT                    &kp CARET  &kp AMPERSAND      &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp NON_US_BACKSLASH
-&trans     &trans           &trans       &trans    &kp MINUS       &kp EQUAL                      &kp GRAVE  &kp SINGLE_QUOTE   &kp COLON     &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp PIPE
-&trans     &trans           &trans       &trans    &kp UNDERSCORE  &kp PLUS                       &kp TILDE  &kp DOUBLE_QUOTES  &kp SLASH     &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp PERIOD
-&trans     &trans           &trans       &trans    &trans          &trans       &trans    &trans  &trans     &trans             &trans        &trans                &trans                 &trans
-                                         &trans    &trans          &trans       &trans    &trans  &trans     &trans             &trans
+&trans  &trans               &trans  &trans                &trans          &trans                            &trans                  &trans              &trans     &trans                &trans                 &trans
+&trans  &kp EXCLAMATION      &kp AT  &kp HASH              &kp DOLLAR      &kp PERCENT                       &kp CARET               &kp AMPERSAND       &kp STAR   &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &trans
+&trans  &kp C_AL_CALCULATOR  &none   &kp NON_US_BACKSLASH  &kp MINUS       &kp EQUAL                         &kp GRAVE               &kp SINGLE_QUOTE    &kp COLON  &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &trans
+&trans  &trans               &none   &kp PIPE              &kp UNDERSCORE  &kp PLUS     &trans       &trans  &kp TILDE               &kp DOUBLE_QUOTES   &kp SLASH  &kp LEFT_BRACE        &kp RIGHT_BRACE        &trans
+                                                           &trans          &trans       &mo SPACE    &trans  &bm WIN_FUNC BACKSPACE  &kp LC(LEFT_SHIFT)
             >;
         };
 
