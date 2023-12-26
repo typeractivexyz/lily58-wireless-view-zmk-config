@@ -209,7 +209,7 @@
 &trans  &trans   &trans   &trans  &trans  &trans                        &bt BT_SEL 0            &bt BT_SEL 1        &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &trans   
 &trans  &kp F1   &kp F2   &kp F3  &kp F4  &kp F5                        &bt BT_CLR              &trans              &trans        &trans        &trans        &to MAC_DEF     
 &trans  &kp F6   &kp F7   &kp F8  &kp F9  &kp F10                       &trans                  &kp LEFT            &kp DOWN      &kp UP        &kp RIGHT     &trans
-&trans  &kp F11  &kp F12  &none   &none   &none    &trans       &trans  &none                   &none               &none         &none         &trans
+&trans  &kp F11  &kp F12  &none   &none   &none    &trans       &trans  &none                   &none               &none         &none         &trans        &trans
                           &none   &trans  &trans   &kp SPACE    &trans  &bm WIN_FUNC BACKSPACE  &kp LC(LEFT_SHIFT)  &trans
             >;
         };
@@ -242,7 +242,7 @@
 &trans  &trans   &trans   &trans  &trans  &trans                        &bt BT_SEL 0            &bt BT_SEL 1        &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &trans   
 &trans  &kp F1   &kp F2   &kp F3  &kp F4  &kp F5                        &bt BT_CLR              &trans              &trans        &trans        &trans        &to MAC_DEF     
 &trans  &kp F6   &kp F7   &kp F8  &kp F9  &kp F10                       &trans                  &kp LEFT            &kp DOWN      &kp UP        &kp RIGHT     &trans
-&trans  &kp F11  &kp F12  &none   &none   &none    &trans       &trans  &none                   &none               &none         &none         &trans
+&trans  &kp F11  &kp F12  &none   &none   &none    &trans       &trans  &none                   &none               &none         &none         &trans        &trans
                           &none   &trans  &trans   &kp SPACE    &trans  &bm WIN_FUNC BACKSPACE  &kp LC(LEFT_SHIFT)  &trans
             >;
         };
