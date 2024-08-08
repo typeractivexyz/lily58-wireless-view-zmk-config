@@ -63,11 +63,11 @@
 
             display-name = "Lower";
             bindings = <
-&trans  &none     &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp KP_MULTIPLY                    &none      &none      &none            &none     &none     &trans
-&trans  &kp F2    &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &kp PLUS                           &kp F7     &kp F8     &kp F9           &kp F10   &kp F11   &kp F12
-&trans  &kp EXCL  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &kp MINUS                          &kp CARET  &kp AMPS   &kp KP_MULTIPLY  &kp LPAR  &kp RPAR  &kp TILDE
-&trans  &none     &kp KP_NUMBER_0  &kp COMMA        &kp PERIOD       &kp KP_DIVIDE    &trans    &trans  &trans     &kp MINUS  &kp KP_PLUS      &kp LBRC  &kp RBRC  &kp PIPE
-                                   &trans           &trans           &trans           &trans    &trans  &trans     &trans     &trans
+&trans  &none  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp KP_MULTIPLY                    &none      &none      &none            &none     &none     &trans
+&trans  &none  &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &kp PLUS                           &kp F7     &kp F8     &kp F9           &kp F10   &kp F11   &kp F12
+&trans  &none  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &kp MINUS                          &kp CARET  &kp AMPS   &kp KP_MULTIPLY  &kp LPAR  &kp RPAR  &kp TILDE
+&trans  &none  &kp KP_NUMBER_0  &kp COMMA        &kp PERIOD       &kp KP_DIVIDE    &trans    &trans  &trans     &kp MINUS  &kp KP_PLUS      &kp LBRC  &kp RBRC  &kp PIPE
+                                &trans           &trans           &trans           &trans    &trans  &trans     &trans     &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
