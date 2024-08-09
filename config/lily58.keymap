@@ -53,7 +53,7 @@
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
-        lower_layer {
+        numeric_layer {
             // ------------------------------------------------------------------------------------------------------------
             // | BTCLR | BT1 | BT2 |  BT3 |  BT4 |  BT5 |                   |      |       |       |      |       |       |
             // |  F1   |  F2 |  F3 |  F4  |  F5  |  F6  |                   |  F7  |  F8   |  F9   |  F10 |  F11  |  F12  |
@@ -63,17 +63,17 @@
 
             display-name = "Lower";
             bindings = <
-&trans  &none  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp KP_MULTIPLY                    &none      &none      &none            &none     &none     &trans
-&trans  &none  &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &kp PLUS                           &kp F7     &kp F8     &kp F9           &kp F10   &kp F11   &kp F12
-&trans  &none  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &kp MINUS                          &kp CARET  &kp AMPS   &kp KP_MULTIPLY  &kp LPAR  &kp RPAR  &kp TILDE
-&trans  &none  &kp KP_NUMBER_0  &kp COMMA        &kp PERIOD       &kp KP_DIVIDE    &trans    &trans  &trans     &kp MINUS  &kp KP_PLUS      &kp LBRC  &kp RBRC  &kp PIPE
-                                &trans           &trans           &trans           &trans    &trans  &trans     &trans     &trans
+&trans  &none  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp KP_MULTIPLY                                                 &none   &none      &none            &none     &none     &trans
+&trans  &none  &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &kp PLUS                                                        &none   &kp F8     &kp F9           &kp F10   &kp F11   &kp F12
+&trans  &none  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &kp MINUS                                                       &none   &kp AMPS   &kp KP_MULTIPLY  &kp LPAR  &kp RPAR  &kp TILDE
+&trans  &none  &kp KP_NUMBER_0  &kp COMMA        &kp PERIOD       &kp KP_DIVIDE    &kp LEFT_PARENTHESIS    &kp RIGHT_PARENTHESIS  &none   &kp MINUS  &kp KP_PLUS      &kp LBRC  &kp RBRC  &kp PIPE
+                                &trans           &trans           &trans           &trans                  &trans                 &trans  &trans     &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
-        raise_layer {
+        navi_layer {
             // ------------------------------------------------------------------------------------------------------------
             // |       |     |     |      |      |      |                   |      |       |       |      |       |       |
             // |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   |       |
@@ -83,24 +83,14 @@
 
             display-name = "Raise";
             bindings = <
-&trans      &kp F1  &kp F2    &kp F3       &kp F4   &kp F5                     &kp F6       &kp F7     &kp F8        &kp F9           &kp F10    &trans
-&kp GRAVE   &trans  &trans    &kp PG_UP    &trans   &kp F11                    &kp F12      &none      &kp UP_ARROW  &none            &none      &trans
-&kp DEL     &trans  &kp HOME  &kp PG_DN    &kp END  &trans                     &trans       &kp LEFT   &kp DOWN      &kp RIGHT_ARROW  &kp RIGHT  &trans
-&kp INSERT  &trans  &trans    &kp LC(INS)  &trans   &trans   &trans    &trans  &kp KP_PLUS  &kp MINUS  &kp EQUAL     &kp LBKT         &kp RBKT   &kp BSLH
+&trans      &kp F1  &kp F2    &kp F3       &kp F4   &kp F5                     &kp F6       &kp F7     &kp F8        &kp F9           &kp F10   &trans
+&kp GRAVE   &trans  &trans    &kp PG_UP    &trans   &kp F11                    &kp F12      &none      &kp UP_ARROW  &none            &none     &trans
+&kp DEL     &trans  &kp HOME  &kp PG_DN    &kp END  &trans                     &trans       &kp LEFT   &kp DOWN      &kp RIGHT_ARROW  &none     &trans
+&kp INSERT  &trans  &trans    &kp LC(INS)  &trans   &trans   &trans    &trans  &kp KP_PLUS  &kp MINUS  &kp EQUAL     &kp LBKT         &kp RBKT  &kp BSLH
                               &trans       &trans   &trans   &trans    &trans  &trans       &trans     &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
-        };
-
-        layer_3 {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                        &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans
-            >;
         };
     };
 };
