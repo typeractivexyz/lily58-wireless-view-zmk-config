@@ -18,16 +18,6 @@
             tapping-term-ms = <200>;
             flavor = "balanced";
         };
-
-        ht_layer: ht_layer {
-            compatible = "zmk,behavior-hold-tap";
-            label = "HT_LAYER";
-            bindings = <&mo>, <&kp>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            flavor = "balanced";
-        };
     };
 
     keymap {
@@ -43,11 +33,11 @@
 
             display-name = "Base";
             bindings = <
-&kp ESC        &kp N1  &kp N2  &kp N3            &kp N4        &kp N5                                                              &kp N6  &kp N7             &kp N8     &kp N9   &kp N0    &kp EQUAL
-&kp TAB        &kp Q   &kp W   &kp E             &kp R         &kp T                                                               &kp Y   &kp U              &kp I      &kp O    &kp P     &kp MINUS
-&kp BACKSPACE  &kp A   &kp S   &kp D             &kp F         &kp G                                                               &kp H   &kp J              &kp K      &kp L    &kp SEMI  &kp SQT
-&kp LSHFT      &kp Z   &kp X   &kp C             &kp V         &kp B               &kp COMMA                      &kp PERIOD       &kp N   &kp M              &kp COMMA  &kp DOT  &kp FSLH  &kp RSHFT
-                               &kp LEFT_CONTROL  &kp LEFT_ALT  &kp LC(LEFT_SHIFT)  &ht_custom LEFT_SHIFT SPACE    &ht_layer 2 RET  &mo 1   &kp RC(RIGHT_ALT)  &kp RGUI
+&kp ESC        &kp N1  &kp N2  &kp N3            &kp N4        &kp N5                                                         &kp N6  &kp N7    &kp N8     &kp N9   &kp N0    &kp EQUAL
+&kp TAB        &kp Q   &kp W   &kp E             &kp R         &kp T                                                          &kp Y   &kp U     &kp I      &kp O    &kp P     &kp MINUS
+&kp BACKSPACE  &kp A   &kp S   &kp D             &kp F         &kp G                                                          &kp H   &kp J     &kp K      &kp L    &kp SEMI  &kp SQT
+&kp LSHFT      &kp Z   &kp X   &kp C             &kp V         &kp B               &kp COMMA                      &kp PERIOD  &kp N   &kp M     &kp COMMA  &kp DOT  &kp FSLH  &kp RSHFT
+                               &kp LEFT_CONTROL  &kp LEFT_ALT  &kp LC(LEFT_SHIFT)  &ht_custom LEFT_SHIFT SPACE    &lt 2 RET   &mo 1   &kp RALT  &kp RGUI
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
@@ -63,11 +53,11 @@
 
             display-name = "Lower";
             bindings = <
-&trans  &none  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp KP_MULTIPLY                                                 &none   &none      &none            &none     &none     &trans
-&trans  &none  &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &kp PLUS                                                        &none   &kp F8     &kp F9           &kp F10   &kp F11   &kp F12
-&trans  &none  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &kp MINUS                                                       &none   &kp AMPS   &kp KP_MULTIPLY  &kp LPAR  &kp RPAR  &kp TILDE
-&trans  &none  &kp KP_NUMBER_0  &kp COMMA        &kp PERIOD       &kp KP_DIVIDE    &kp LEFT_PARENTHESIS    &kp RIGHT_PARENTHESIS  &none   &kp MINUS  &kp KP_PLUS      &kp LBRC  &kp RBRC  &kp PIPE
-                                &trans           &trans           &trans           &trans                  &trans                 &trans  &trans     &trans
+&trans  &none  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp KP_MULTIPLY                    &none   &none      &none            &none     &none     &trans
+&trans  &none  &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &kp PLUS                           &none   &kp F8     &kp F9           &kp F10   &kp F11   &kp F12
+&trans  &none  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &kp MINUS                          &none   &kp AMPS   &kp KP_MULTIPLY  &kp LPAR  &kp RPAR  &kp TILDE
+&trans  &none  &kp KP_NUMBER_0  &kp COMMA        &kp PERIOD       &kp KP_DIVIDE    &trans    &trans  &none   &kp MINUS  &kp KP_PLUS      &kp LBRC  &kp RBRC  &kp PIPE
+                                &trans           &trans           &trans           &trans    &trans  &trans  &trans     &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
