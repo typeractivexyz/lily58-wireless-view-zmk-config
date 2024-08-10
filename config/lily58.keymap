@@ -27,11 +27,10 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings =
-                <&macro_press>,
-                <&mo 3 &kp RIGHT_ALT>,
+                <&macro_press &kp RALT &mo altgr_layer>,
                 <&macro_pause_for_release>,
-                <&macro_release>,
-                <&mo 3 &kp RIGHT_ALT>;
+                <&macro_release &kp RALT &mo altgr_layer>,
+            ;
 
             label = "ALTGR_MACRO";
         };
