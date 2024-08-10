@@ -26,13 +26,23 @@
         AltGr: AltGr_macro {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp RALT &mo 3>,
-                <&macro_release>,
-                <&kp RALT &mo 3>;
+            bindings = <&macro_press>, <&mo 3>, <&macro_release>, <&mo 3>;
 
             label = "ALTGR_MACRO";
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+
+        left_par {
+            bindings = <&kp LEFT_PARENTHESIS>;
+            key-positions = <56 36>;
+        };
+
+        r_par {
+            bindings = <&kp RIGHT_PARENTHESIS>;
+            key-positions = <56 49>;
         };
     };
 
@@ -72,7 +82,7 @@
 &trans  &none  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp KP_MULTIPLY                    &none   &none   &none   &none  &none  &none
 &trans  &none  &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &kp PLUS                           &none   &none   &none   &none  &none  &none
 &trans  &none  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &kp MINUS                          &none   &none   &none   &none  &none  &none
-&trans  &none  &kp KP_NUMBER_0  &kp COMMA        &kp PERIOD       &kp KP_DIVIDE    &trans    &trans  &none   &none   &none   &none  &none  &none
+&trans  &none  &kp KP_NUMBER_0  &kp COMMA        &kp PERIOD       &kp KP_DIVIDE    &trans    &trans  &none   &none   &none   &none  &none  &trans
                                 &trans           &trans           &trans           &trans    &trans  &trans  &trans  &trans
             >;
 
