@@ -6,7 +6,6 @@
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/mouse.h>
 
 / {
@@ -20,31 +19,45 @@
             tapping-term-ms = <200>;
             flavor = "balanced";
         };
-    };
 
-    macros {
-        AltGr: AltGr_macro {
-            compatible = "zmk,behavior-macro";
+        mod_lpar: mod_lpar {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MOD_LPAR";
+            bindings = <&kp LEFT_BRACKET>, <&kp LEFT_PARENTHESIS>;
+
             #binding-cells = <0>;
-            bindings = <&macro_press>, <&mo 3>, <&macro_release>, <&mo 3>;
+            mods = <(MOD_RALT)>;
+        };
 
-            label = "ALTGR_MACRO";
+        mod_rpar: mod_rpar {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MOD_RPAR";
+            bindings = <&kp RIGHT_BRACKET>, <&kp RIGHT_PARENTHESIS>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_RALT)>;
+        };
+
+        mod_coma: mod_coma {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MOD_COMA";
+            bindings = <&kp COMMA>, <&kp SEMICOLON>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_RALT)>;
+        };
+
+        mod_period: mod_period {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MOD_PERIOD";
+            bindings = <&kp PERIOD>, <&kp COLON>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_RALT)>;
         };
     };
 
-    combos {
-        compatible = "zmk,combos";
-
-        left_par {
-            bindings = <&kp LEFT_PARENTHESIS>;
-            key-positions = <56 36>;
-        };
-
-        r_par {
-            bindings = <&kp RIGHT_PARENTHESIS>;
-            key-positions = <56 49>;
-        };
-    };
+    combos { compatible = "zmk,combos"; };
 
     keymap {
         compatible = "zmk,keymap";
@@ -59,11 +72,11 @@
 
             display-name = "Base";
             bindings = <
-&kp ESC        &kp N1  &kp N2  &kp N3            &kp N4        &kp N5                                                         &kp N6  &kp N7  &kp N8    &kp N9    &kp N0    &kp EQUAL
-&kp TAB        &kp Q   &kp W   &kp E             &kp R         &kp T                                                          &kp Y   &kp U   &kp I     &kp O     &kp P     &kp MINUS
-&kp BACKSPACE  &kp A   &kp S   &kp D             &kp F         &kp G                                                          &kp H   &kp J   &kp K     &kp L     &kp SEMI  &kp SQT
-&kp LBKT       &kp Z   &kp X   &kp C             &kp V         &kp B               &kp COMMA                      &kp PERIOD  &kp N   &kp M   &kp APOS  &kp PIPE  &kp FSLH  &kp RBKT
-                               &kp LEFT_CONTROL  &kp LEFT_ALT  &kp LC(LEFT_SHIFT)  &ht_custom LEFT_SHIFT SPACE    &lt 2 RET   &mo 1   &AltGr  &kp RGUI
+&kp ESC        &kp N1  &kp N2  &kp N3            &kp N4        &kp N5                                                          &kp N6  &kp N7         &kp N8    &kp N9    &kp N0    &kp EQUAL
+&kp TAB        &kp Q   &kp W   &kp E             &kp R         &kp T                                                           &kp Y   &kp U          &kp I     &kp O     &kp P     &kp MINUS
+&kp BACKSPACE  &kp A   &kp S   &kp D             &kp F         &kp G                                                           &kp H   &kp J          &kp K     &kp L     &kp SEMI  &kp SQT
+&mod_lpar      &kp Z   &kp X   &kp C             &kp V         &kp B               &mod_coma                      &mod_period  &kp N   &kp M          &kp APOS  &kp PIPE  &kp FSLH  &mod_rpar
+                               &kp LEFT_CONTROL  &kp LEFT_ALT  &kp LC(LEFT_SHIFT)  &ht_custom LEFT_SHIFT SPACE    &lt 2 RET    &mo 1   &kp RIGHT_ALT  &kp RGUI
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
@@ -107,16 +120,6 @@
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
-        };
-
-        altgr_layer {
-            bindings = <
-&trans                &trans  &trans  &trans  &trans  &trans                              &trans  &trans  &trans  &trans  &trans  &trans
-&trans                &trans  &trans  &trans  &trans  &trans                              &trans  &trans  &trans  &trans  &trans  &trans
-&trans                &trans  &trans  &trans  &trans  &trans                              &trans  &trans  &trans  &trans  &trans  &trans
-&kp LEFT_PARENTHESIS  &trans  &trans  &trans  &trans  &trans  &kt SEMICOLON    &kp COLON  &trans  &trans  &trans  &trans  &trans  &kp RIGHT_PARENTHESIS
-                                      &trans  &trans  &trans  &trans           &trans     &trans  &trans  &trans
-            >;
         };
     };
 };
