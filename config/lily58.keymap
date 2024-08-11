@@ -65,6 +65,15 @@
             mods = <(MOD_LSFT)>;
             keep-mods = <(MOD_LSFT)>;
         };
+
+        eq_asterix: eq_asterix {
+            compatible = "zmk,behavior-mod-morph";
+            label = "EQ_ASTERIX";
+            bindings = <&kp EQUAL>, <&kp ASTERISK>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_RALT)>;
+        };
     };
 
     combos { compatible = "zmk,combos"; };
@@ -82,7 +91,7 @@
 
             display-name = "Base";
             bindings = <
-&gresc         &kp N1  &kp N2  &kp N3            &kp N4        &kp N5                                                          &kp N6  &kp N7         &kp N8         &kp N9         &kp N0    &kp EQUAL
+&gresc         &kp N1  &kp N2  &kp N3            &kp N4        &kp N5                                                          &kp N6  &kp N7         &kp N8         &kp N9         &kp N0    &eq_asterix
 &kp TAB        &kp Q   &kp W   &kp E             &kp R         &kp T                                                           &kp Y   &kp U          &kp I          &kp O          &kp P     &kp MINUS
 &kp BACKSPACE  &kp A   &kp S   &kp D             &kp F         &kp G                                                           &kp H   &kp J          &kp K          &kp L          &kp SEMI  &kp SQT
 &mod_lpar      &kp Z   &kp X   &kp C             &kp V         &kp B               &mod_coma                      &mod_period  &kp N   &kp M          &kp AMPERSAND  &kp BACKSLASH  &kp FSLH  &mod_rpar
