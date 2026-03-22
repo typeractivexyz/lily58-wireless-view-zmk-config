@@ -9,13 +9,27 @@
 #define MOUSE_KEYS 2
 #define MOUSE_TP 3
 #define MOUSE_TP_SET 4
-#define GAME 5  // 通用游戏层
+#define GAME 5  // 新增：通用游戏层
+
+/*
+ * Defines to enable/disable features
+ *
+ * These defines allow us to conditionally enable and disable parts of the keymap config.
+ *
+ * For example, if we decide to build the firmware without the mouse features, we can
+ * disable all the config options that rely on those forks and modules without having
+ * to edit the entire keymap file manually every time.
+ */
 
 #define HAS_MOUSE_KEYS
 #define HAS_MOUSE_TP
 
 #include <dt-bindings/zmk/mouse.h>
 #include <behaviors/mouse_keys.dtsi>
+
+// We store the trackpoint settings in a separate file
+// to make organization a little easier.
+
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
@@ -23,10 +37,12 @@
 
 / {
     behaviors {
+        // ========== 原有行为：完全保留 ==========
         hm: homerow_mods {
             compatible = "zmk,behavior-hold-tap";
             label = "homerow_mods";
             bindings = <&kp>, <&kp>;
+
             #binding-cells = <2>;
             tapping-term-ms = <200>;
             flavor = "tap-preferred";
@@ -43,58 +59,46 @@
             compatible = "zmk,behavior-hold-tap";
             label = "MOUSECLICK_KEYPRESS";
             bindings = <&mkp>, <&kp>;
+
             #binding-cells = <2>;
             tapping-term-ms = <200>;
             flavor = "tap-preferred";
         };
 
-        // ========== 新增：游戏层切换核心行为 ==========
-        // 1. 左拇指键：轻按切Layer1，长按触发游戏层切换（配合右拇指）
-        game_layer1: game_layer1 {
+        // ========== 新增：游戏层锁定行为（轻按BACKSPACE，长按锁定/解锁） ==========
+        game_lock: game_lock {
             compatible = "zmk,behavior-hold-tap";
-            label = "GAME_LAYER1";
-            bindings = <&lt 1 TAB>, <&mo 5>;  // 轻按=原&lt1功能，长按=激活游戏层
+            label = "GAME_LOCK";
+            bindings = <&kp BACKSPACE>, <&toggle 5>;  // 轻按=退格，长按=锁定游戏层
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            flavor = "hold-preferred";  // 长按优先（避免轻按误触）
+            tapping-term-ms = <300>;  // 300ms阈值防误触
+            flavor = "tap-preferred";  // 轻按优先（保证打字正常）
         };
+    };
 
-        // 2. 右拇指键：轻按切Layer2，长按触发游戏层切换（配合左拇指）
-        game_layer2: game_layer2 {
-            compatible = "zmk,behavior-hold-tap";
-            label = "GAME_LAYER2";
-            bindings = <&lt 2 BACKSPACE>, <&mo 5>;  // 轻按=原&lt2功能，长按=激活游戏层
-            #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            flavor = "hold-preferred";
-        };
-
-        // 3. 游戏层退出键（复用双长按逻辑）
-        game_exit: game_exit {
-            compatible = "zmk,behavior-hold-tap";
-            label = "GAME_EXIT";
-            bindings = <&trans>, <&to 0>;  // 轻按无反应，长按切回默认层
-            #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            flavor = "hold-preferred";
-        };
+    // ========== 新增：条件层（Layer1+Layer2同时激活时叠加游戏层） ==========
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        layers = <
+            <5 (1 << 1) | (1 << 2)>  // Layer1+Layer2 → 激活Layer5
+        >;
     };
 
     keymap {
         compatible = "zmk,keymap";
 
-        // ========== 默认层（Layer0）：修改双拇指键为游戏层触发 ==========
+        // ========== 原有默认层：仅修改右上角BACKSPACE为game_lock ==========
         default_layer {
             bindings = <
-&kp ESC         &kp N1        &kp N2          &kp N3      &kp N4       &kp N5                                                          &kp N6           &kp N7       &kp N8      &kp N9           &kp N0    &kp BACKSPACE
+&kp ESC         &kp N1        &kp N2          &kp N3      &kp N4       &kp N5                                                          &kp N6           &kp N7       &kp N8      &kp N9           &kp N0    &game_lock
 &kp TAB         &hm ESCAPE Q  &kp W           &kp E       &kp R        &kp T                                                           &kp Y            &kp U        &kp I       &kp O            &kp P     &kp MINUS
 &kp LC(LSHIFT)  &kp A         &hm LEFT_ALT S  &hm LGUI D  &hm LSHFT F  &hm LCTRL G                                                     &hm RCTRL H      &hm RSHFT J  &hm RGUI K  &hm RIGHT_ALT L  &kp SEMI  &kp ENTER
 &kp GRAVE       &kp Z         &kp X           &kp C       &kp V        &kp B        &hm LA(LC(W)) LBKT    &hm LC(LG(A)) RIGHT_BRACKET  &kp N            &kp M        &kp COMMA   &kp DOT          &kp FSLH  &kp BACKSLASH
-                                              &kp LCTRL   &kp LALT     &game_layer1   &hm LGUI ENTER        &hm LC(SPACE) SPACE          &game_layer2     &kp EQUAL    &kp SQT
+                                              &kp LCTRL   &kp LALT     &lt 1 TAB    &hm LGUI ENTER        &hm LC(SPACE) SPACE          &lt 2 BACKSPACE  &lt 3 EQUAL  &kp SQT
             >;
         };
 
-        // ========== 原有层：完全不修改 ==========
+        // ========== 原有Layer1（symbol）：完全保留 ==========
         symbol {
             bindings = <
 &kp F1  &kp F2        &kp F3         &kp F4         &kp F5         &kp F6                                  &kp F7         &kp F8        &kp F9         &kp F10       &kp F11       &kp F12
@@ -105,6 +109,7 @@
             >;
         };
 
+        // ========== 原有Layer2（navi）：完全保留 ==========
         navi {
             bindings = <
 &trans     &trans         &trans         &trans         &trans  &trans                    &trans             &trans           &trans            &trans           &trans     &trans
@@ -115,6 +120,7 @@
             >;
         };
 
+        // ========== 原有Layer3（mouse_3）：完全保留 ==========
         mouse_3 {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
@@ -125,6 +131,7 @@
             >;
         };
 
+        // ========== 原有Layer4（layer_4）：完全保留 ==========
         layer_4 {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
@@ -135,14 +142,14 @@
             >;
         };
 
-        // ========== 通用游戏层（Layer5）：左手全基础键 + 双长按退出 ==========
+        // ========== 新增：通用游戏层（Layer5） ==========
         game_layer {
             bindings = <
-&kp ESC   &kp N1   &kp N2   &kp N3   &kp N4   &kp N5                     &kp N6   &kp N7   &kp N8   &kp N9   &kp N0   &kp BSPC
+&kp ESC   &kp N1   &kp N2   &kp N3   &kp N4   &kp N5                     &kp N6   &kp N7   &kp N8   &kp N9   &kp N0   &game_lock
 &kp TAB   &kp Q    &kp W    &kp E    &kp R    &kp T                       &kp Y    &kp U    &kp I    &kp O    &kp P    &kp MINUS
 &kp LSHIFT&kp A    &kp S    &kp D    &kp F    &kp G                       &kp H    &kp J    &kp K    &kp L    &kp SEMI &kp ENTER
 &kp GRAVE &kp Z    &kp X    &kp C    &kp V    &kp B     &kp LBKT  &kp RBKT  &kp N    &kp M    &kp COMMA&kp DOT  &kp FSLH  &kp BSLH
-                        &kp LCTRL &kp LALT &game_exit   &kp SPACE &kp ENTER  &game_exit &kp RALT &kp RCTRL
+                        &kp LCTRL &kp LALT &kp LGUI &kp SPACE &kp ENTER  &kp RSHIFT &kp RALT &kp RCTRL
             >;
         };
     };
