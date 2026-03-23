@@ -23,6 +23,16 @@
 
 / {
     behaviors {
+        /* [修复 1] 新增：定义缺失的 lt (Layer Tap) 行为 */
+        lt: layer_tap {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LAYER_TAP";
+            bindings = <&mo>, <&kp>;
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            flavor = "tap-preferred";
+        };
+
         hm: homerow_mods {
             compatible = "zmk,behavior-hold-tap";
             label = "homerow_mods";
@@ -36,6 +46,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "LEFTCLICK";
             #binding-cells = <0>;
+            /* 注意：混合不同 binding-cells 的行为在某些 ZMK 版本可能不稳定，但语法已修正 */
             bindings = <&hm LC(SPACE) SPACE>, <&mkp LCLK>;
         };
 
@@ -48,29 +59,30 @@
             flavor = "tap-preferred";
         };
 
-        /* ========== 新增：游戏层锁定行为（轻按BACKSPACE，长按锁定/解锁） ========== */
+        /* [修复 3] 修正：游戏层锁定行为逻辑顺序 */
         game_lock: game_lock {
             compatible = "zmk,behavior-hold-tap";
             label = "GAME_LOCK";
-            bindings = <&kp BACKSPACE>, <&toggle 5>;  /* 轻按=退格，长按=锁定游戏层 */
+            /* ZMK hold-tap 顺序为：<&长按行为>, <&轻按行为> */
+            /* 意图：轻按=退格，长按=锁定游戏层 */
+            bindings = <&toggle 5>, <&kp BACKSPACE>; 
             #binding-cells = <0>;
-            tapping-term-ms = <300>;  /* 300ms阈值防误触 */
-            flavor = "tap-preferred";  /* 轻按优先（保证打字正常） */
+            tapping-term-ms = <300>;
+            flavor = "tap-preferred";
         };
     };
 
-    /* ========== 修复：条件层语法（双层括号） ========== */
+    /* [修复 2] 修正：条件层语法（去掉多余的尖括号） */
     conditional_layers {
         compatible = "zmk,conditional-layers";
-        layers = <
-            <5 <((1 << 1) | (1 << 2))>> 
-            >;
+        /* 格式：<目标层 掩码> */
+        layers = < 5 ((1 << 1) | (1 << 2)) >;
     };
 
     keymap {
         compatible = "zmk,keymap";
 
-        /* ========== 原有默认层：仅修改右上角BACKSPACE为game_lock ========== */
+        /* ========== 原有默认层：仅修改右上角 BACKSPACE 为 game_lock ========== */
         default_layer {
             bindings = <
 &kp ESC         &kp N1        &kp N2          &kp N3      &kp N4       &kp N5                                                          &kp N6           &kp N7       &kp N8      &kp N9           &kp N0    &game_lock
@@ -81,7 +93,7 @@
             >;
         };
 
-        /* ========== 原有Layer1（symbol）：完全保留 ========== */
+        /* ========== 原有 Layer1（symbol）：完全保留 ========== */
         symbol {
             bindings = <
 &kp F1  &kp F2        &kp F3         &kp F4         &kp F5         &kp F6                                  &kp F7         &kp F8        &kp F9         &kp F10       &kp F11       &kp F12
@@ -92,7 +104,7 @@
             >;
         };
 
-        /* ========== 原有Layer2（navi）：完全保留 ========== */
+        /* ========== 原有 Layer2（navi）：完全保留 ========== */
         navi {
             bindings = <
 &trans     &trans         &trans         &trans         &trans  &trans                    &trans             &trans           &trans            &trans           &trans     &trans
@@ -103,7 +115,7 @@
             >;
         };
 
-        /* ========== 原有Layer3（mouse_3）：完全保留 ========== */
+        /* ========== 原有 Layer3（mouse_3）：完全保留 ========== */
         mouse_3 {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
@@ -114,7 +126,7 @@
             >;
         };
 
-        /* ========== 原有Layer4（layer_4）：完全保留 ========== */
+        /* ========== 原有 Layer4（layer_4）：完全保留 ========== */
         layer_4 {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
