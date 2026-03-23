@@ -63,8 +63,8 @@
     conditional_layers {
         compatible = "zmk,conditional-layers";
         layers = <
-            <5 ((1 << 1) | (1 << 2))>  /* 正确格式：双层括号包裹表达式 */
-        >;
+            <5 <((1 << 1) | (1 << 2))>> 
+            >;
     };
 
     keymap {
