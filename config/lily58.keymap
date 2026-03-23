@@ -9,8 +9,7 @@
 #define MOUSE_KEYS 2
 #define MOUSE_TP 3
 #define MOUSE_TP_SET 4
-#define GAME 5 
-
+#define GAME 5
 #define HAS_MOUSE_KEYS
 #define HAS_MOUSE_TP
 
@@ -24,10 +23,12 @@
 / {
     behaviors {
         /* [修复 1] 新增：定义缺失的 lt (Layer Tap) 行为 */
+
         lt: layer_tap {
             compatible = "zmk,behavior-hold-tap";
             label = "LAYER_TAP";
             bindings = <&mo>, <&kp>;
+
             #binding-cells = <2>;
             tapping-term-ms = <200>;
             flavor = "tap-preferred";
@@ -37,6 +38,7 @@
             compatible = "zmk,behavior-hold-tap";
             label = "homerow_mods";
             bindings = <&kp>, <&kp>;
+
             #binding-cells = <2>;
             tapping-term-ms = <200>;
             flavor = "tap-preferred";
@@ -53,18 +55,23 @@
             compatible = "zmk,behavior-hold-tap";
             label = "MOUSECLICK_KEYPRESS";
             bindings = <&mkp>, <&kp>;
+
             #binding-cells = <2>;
             tapping-term-ms = <200>;
             flavor = "tap-preferred";
         };
 
         /* [修复 2] 修正：将 &toggle 改为 &tog (ZMK 标准行为) */
+
         game_lock: game_lock {
             compatible = "zmk,behavior-hold-tap";
             label = "GAME_LOCK";
+
             /* ZMK hold-tap 顺序为：<&长按行为>, <&轻按行为> */
             /* 意图：轻按=退格，长按=切换游戏层 */
-            bindings = <&tog 5>, <&kp BACKSPACE>; 
+
+            bindings = <&tog>, <&kp>;
+
             #binding-cells = <0>;
             tapping-term-ms = <300>;
             flavor = "tap-preferred";
@@ -72,19 +79,28 @@
     };
 
     /* [修复 3] 修正：条件层语法（去掉多余的尖括号） */
+
     conditional_layers {
         compatible = "zmk,conditional-layers";
+
         /* 格式：<目标层 掩码> */
+
         layers = < 5 ((1 << 1) | (1 << 2)) >;
+
+        gamelayer {
+            if-layers = <1 2>;
+            then-layer = <5>;
+        };
     };
 
     keymap {
         compatible = "zmk,keymap";
 
         /* ========== 原有默认层：仅修改右上角 BACKSPACE 为 game_lock ========== */
+
         default_layer {
             bindings = <
-&kp ESC         &kp N1        &kp N2          &kp N3      &kp N4       &kp N5                                                          &kp N6           &kp N7       &kp N8      &kp N9           &kp N0    &game_lock
+&kp ESC         &kp N1        &kp N2          &kp N3      &kp N4       &kp N5                                                          &kp N6           &kp N7       &kp N8      &kp N9           &kp N0    &game_lock 5 BACKSPACE
 &kp TAB         &hm ESCAPE Q  &kp W           &kp E       &kp R        &kp T                                                           &kp Y            &kp U        &kp I       &kp O            &kp P     &kp MINUS
 &kp LC(LSHIFT)  &kp A         &hm LEFT_ALT S  &hm LGUI D  &hm LSHFT F  &hm LCTRL G                                                     &hm RCTRL H      &hm RSHFT J  &hm RGUI K  &hm RIGHT_ALT L  &kp SEMI  &kp ENTER
 &kp GRAVE       &kp Z         &kp X           &kp C       &kp V        &kp B        &hm LA(LC(W)) LBKT    &hm LC(LG(A)) RIGHT_BRACKET  &kp N            &kp M        &kp COMMA   &kp DOT          &kp FSLH  &kp BACKSLASH
@@ -93,6 +109,7 @@
         };
 
         /* ========== 原有 Layer1（symbol）：完全保留 ========== */
+
         symbol {
             bindings = <
 &kp F1  &kp F2        &kp F3         &kp F4         &kp F5         &kp F6                                  &kp F7         &kp F8        &kp F9         &kp F10       &kp F11       &kp F12
@@ -104,6 +121,7 @@
         };
 
         /* ========== 原有 Layer2（navi）：完全保留 ========== */
+
         navi {
             bindings = <
 &trans     &trans         &trans         &trans         &trans  &trans                    &trans             &trans           &trans            &trans           &trans     &trans
@@ -115,6 +133,7 @@
         };
 
         /* ========== 原有 Layer3（mouse_3）：完全保留 ========== */
+
         mouse_3 {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
@@ -126,6 +145,7 @@
         };
 
         /* ========== 原有 Layer4（layer_4）：完全保留 ========== */
+
         layer_4 {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
@@ -137,13 +157,14 @@
         };
 
         /* ========== 新增：通用游戏层（Layer5） ========== */
+
         game_layer {
             bindings = <
-&kp ESC   &kp N1   &kp N2   &kp N3   &kp N4   &kp N5                     &kp N6   &kp N7   &kp N8   &kp N9   &kp N0   &game_lock
-&kp TAB   &kp Q    &kp W    &kp E    &kp R    &kp T                       &kp Y    &kp U    &kp I    &kp O    &kp P    &kp MINUS
-&kp LSHIFT&kp A    &kp S    &kp D    &kp F    &kp G                       &kp H    &kp J    &kp K    &kp L    &kp SEMI &kp ENTER
-&kp GRAVE &kp Z    &kp X    &kp C    &kp V    &kp B     &kp LBKT  &kp RBKT  &kp N    &kp M    &kp COMMA&kp DOT  &kp FSLH  &kp BSLH
-                        &kp LCTRL &kp LALT &kp LGUI &kp SPACE &kp ENTER  &kp RSHIFT &kp RALT &kp RCTRL
+&kp ESC     &kp N1  &kp N2  &kp N3     &kp N4    &kp N5                            &kp N6      &kp N7    &kp N8     &kp N9   &kp N0    &game_lock 0 BACKSPACE
+&kp TAB     &kp Q   &kp W   &kp E      &kp R     &kp T                             &kp Y       &kp U     &kp I      &kp O    &kp P     &kp MINUS
+&kp LSHIFT  &kp A   &kp S   &kp D      &kp F     &kp G                             &kp H       &kp J     &kp K      &kp L    &kp SEMI  &kp ENTER
+&kp GRAVE   &kp Z   &kp X   &kp C      &kp V     &kp B     &kp LBKT     &kp RBKT   &kp N       &kp M     &kp COMMA  &kp DOT  &kp FSLH  &kp BSLH
+                            &kp LCTRL  &kp LALT  &kp LGUI  &kp SPACE    &kp ENTER  &kp RSHIFT  &kp RALT  &kp RCTRL
             >;
         };
     };
