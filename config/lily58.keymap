@@ -9,7 +9,7 @@
 #define MOUSE_KEYS 2
 #define MOUSE_TP 3
 #define MOUSE_TP_SET 4
-#define GAME 5  // 新增：通用游戏层
+#define GAME 5 
 
 #define HAS_MOUSE_KEYS
 #define HAS_MOUSE_TP
@@ -23,7 +23,6 @@
 
 / {
     behaviors {
-        // ========== 原有行为：完全保留 ==========
         hm: homerow_mods {
             compatible = "zmk,behavior-hold-tap";
             label = "homerow_mods";
