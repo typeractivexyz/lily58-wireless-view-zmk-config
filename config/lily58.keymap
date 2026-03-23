@@ -65,7 +65,7 @@
             label = "GAME_LOCK";
             /* ZMK hold-tap 顺序为：<&长按行为>, <&轻按行为> */
             /* 意图：轻按=退格，长按=锁定游戏层 */
-            bindings = <&toggle 5>, <&kp BACKSPACE>; 
+            bindings = <&tog 5>, <&kp BACKSPACE>; 
             #binding-cells = <0>;
             tapping-term-ms = <300>;
             flavor = "tap-preferred";
