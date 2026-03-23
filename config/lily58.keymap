@@ -48,29 +48,29 @@
             flavor = "tap-preferred";
         };
 
-        // ========== 新增：游戏层锁定行为（轻按BACKSPACE，长按锁定/解锁） ==========
+        /* ========== 新增：游戏层锁定行为（轻按BACKSPACE，长按锁定/解锁） ========== */
         game_lock: game_lock {
             compatible = "zmk,behavior-hold-tap";
             label = "GAME_LOCK";
-            bindings = <&kp BACKSPACE>, <&toggle 5>;  // 轻按=退格，长按=锁定游戏层
+            bindings = <&kp BACKSPACE>, <&toggle 5>;  /* 轻按=退格，长按=锁定游戏层 */
             #binding-cells = <0>;
-            tapping-term-ms = <300>;  // 300ms阈值防误触
-            flavor = "tap-preferred";  // 轻按优先（保证打字正常）
+            tapping-term-ms = <300>;  /* 300ms阈值防误触 */
+            flavor = "tap-preferred";  /* 轻按优先（保证打字正常） */
         };
     };
 
-    // ========== 修复：条件层语法（双层括号） ==========
+    /* ========== 修复：条件层语法（双层括号） ========== */
     conditional_layers {
         compatible = "zmk,conditional-layers";
         layers = <
-            <5 ((1 << 1) | (1 << 2))>  // 正确格式：双层括号包裹表达式
+            <5 ((1 << 1) | (1 << 2))>  /* 正确格式：双层括号包裹表达式 */
         >;
     };
 
     keymap {
         compatible = "zmk,keymap";
 
-        // ========== 原有默认层：仅修改右上角BACKSPACE为game_lock ==========
+        /* ========== 原有默认层：仅修改右上角BACKSPACE为game_lock ========== */
         default_layer {
             bindings = <
 &kp ESC         &kp N1        &kp N2          &kp N3      &kp N4       &kp N5                                                          &kp N6           &kp N7       &kp N8      &kp N9           &kp N0    &game_lock
@@ -81,7 +81,7 @@
             >;
         };
 
-        // ========== 原有Layer1（symbol）：完全保留 ==========
+        /* ========== 原有Layer1（symbol）：完全保留 ========== */
         symbol {
             bindings = <
 &kp F1  &kp F2        &kp F3         &kp F4         &kp F5         &kp F6                                  &kp F7         &kp F8        &kp F9         &kp F10       &kp F11       &kp F12
@@ -92,7 +92,7 @@
             >;
         };
 
-        // ========== 原有Layer2（navi）：完全保留 ==========
+        /* ========== 原有Layer2（navi）：完全保留 ========== */
         navi {
             bindings = <
 &trans     &trans         &trans         &trans         &trans  &trans                    &trans             &trans           &trans            &trans           &trans     &trans
@@ -103,7 +103,7 @@
             >;
         };
 
-        // ========== 原有Layer3（mouse_3）：完全保留 ==========
+        /* ========== 原有Layer3（mouse_3）：完全保留 ========== */
         mouse_3 {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
@@ -114,7 +114,7 @@
             >;
         };
 
-        // ========== 原有Layer4（layer_4）：完全保留 ==========
+        /* ========== 原有Layer4（layer_4）：完全保留 ========== */
         layer_4 {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
@@ -125,7 +125,7 @@
             >;
         };
 
-        // ========== 新增：通用游戏层（Layer5） ==========
+        /* ========== 新增：通用游戏层（Layer5） ========== */
         game_layer {
             bindings = <
 &kp ESC   &kp N1   &kp N2   &kp N3   &kp N4   &kp N5                     &kp N6   &kp N7   &kp N8   &kp N9   &kp N0   &game_lock
