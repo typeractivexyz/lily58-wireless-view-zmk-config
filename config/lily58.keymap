@@ -70,9 +70,9 @@
             /* ZMK hold-tap 顺序为：<&长按行为>, <&轻按行为> */
             /* 意图：轻按=退格，长按=切换游戏层 */
 
-            bindings = <&tog>, <&kp>;
+            bindings = <&tog 5>, <&kp BACKSPACE>;
 
-            #binding-cells = <0>;
+            #binding-cells = <2>;
             tapping-term-ms = <300>;
             flavor = "tap-preferred";
         };
