@@ -46,7 +46,6 @@
             compatible = "zmk,behavior-tap-dance";
             label = "LEFTCLICK";
             #binding-cells = <0>;
-            /* 注意：混合不同 binding-cells 的行为在某些 ZMK 版本可能不稳定，但语法已修正 */
             bindings = <&hm LC(SPACE) SPACE>, <&mkp LCLK>;
         };
 
@@ -59,12 +58,12 @@
             flavor = "tap-preferred";
         };
 
-        /* [修复 3] 修正：游戏层锁定行为逻辑顺序 */
+        /* [修复 2] 修正：将 &toggle 改为 &tog (ZMK 标准行为) */
         game_lock: game_lock {
             compatible = "zmk,behavior-hold-tap";
             label = "GAME_LOCK";
             /* ZMK hold-tap 顺序为：<&长按行为>, <&轻按行为> */
-            /* 意图：轻按=退格，长按=锁定游戏层 */
+            /* 意图：轻按=退格，长按=切换游戏层 */
             bindings = <&tog 5>, <&kp BACKSPACE>; 
             #binding-cells = <0>;
             tapping-term-ms = <300>;
@@ -72,7 +71,7 @@
         };
     };
 
-    /* [修复 2] 修正：条件层语法（去掉多余的尖括号） */
+    /* [修复 3] 修正：条件层语法（去掉多余的尖括号） */
     conditional_layers {
         compatible = "zmk,conditional-layers";
         /* 格式：<目标层 掩码> */
