@@ -1,0 +1,179 @@
+layout: {zmk_keyboard: lily58}
+layers:
+  Base:
+  - '`'
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '0'
+  - '-'
+  - ⇥
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - '='
+  - ⎋
+  - {t: A, h: ⌃}
+  - {t: S, h: ⇧}
+  - {t: D, h: ⌥}
+  - {t: F, h: ⌘}
+  - G
+  - H
+  - {t: J, h: ⌘}
+  - {t: K, h: ⌥}
+  - {t: L, h: ⇧}
+  - {t: ;, h: ⌃}
+  - ⌫
+  - {t: ⌃, type: mod}
+  - Z
+  - X
+  - C
+  - V
+  - B
+  - {t: ⟳, h: ↕, type: encoder}
+  - ''''
+  - N
+  - M
+  - ','
+  - .
+  - /
+  - {t: ⇧, type: mod}
+  - {t: ↑, h: ⌥, type: mod}
+  - {t: ↓, h: ⌘, type: mod}
+  - ▼
+  - ␣
+  - ⏎
+  - ▲
+  - ←
+  - →
+  Lower:
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - ←
+  - ↓
+  - ↑
+  - →
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: ⟳, h: ☀, type: encoder}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {type: held}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  Raise:
+  - {t: □, type: trans}
+  - BT 0
+  - BT 1
+  - BT 2
+  - {t: □, type: trans}
+  - BT ✕
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - ^
+  - '&'
+  - ×
+  - (
+  - )
+  - '~'
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - PREV
+  - NEXT
+  - {t: ⟳, h: ♪, type: encoder}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - '-'
+  - +
+  - '{'
+  - '}'
+  - '|'
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - {t: □, type: trans}
+  - PLAY PAUSE
+  - {t: □, type: trans}
+  - {type: held}
+  - {t: □, type: trans}
+  - {t: □, type: trans}

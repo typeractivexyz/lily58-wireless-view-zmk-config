@@ -1,5 +1,65 @@
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    paths: # firmware-relevant files only — docs/diagram commits never build or release
+      - "config/**"
+      - "build.yaml"
+      - ".github/workflows/build.yml"
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
+
+  release:
+    # Publish every successful main-branch build as a GitHub Release with the .uf2s attached
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    steps:
+      - name: Download firmware artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: firmware
+          path: firmware
+
+      - name: Rename firmware files
+        run: |
+          cd firmware
+          for f in *.uf2; do
+            case "$f" in
+              *lily58_left*)     mv "$f" lily58_left.uf2 ;;
+              *lily58_right*)    mv "$f" lily58_right.uf2 ;;
+              *settings_reset*)  mv "$f" settings_reset.uf2 ;;
+            esac
+          done
+          ls -la
+
+      - name: Prepare release metadata
+        id: meta
+        env:
+          HEAD_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          # New Zealand time (handles NZST/NZDT automatically)
+          echo "tag=v$(TZ='Pacific/Auckland' date +'%Y.%m.%d')-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+          echo "date=$(TZ='Pacific/Auckland' date +'%Y-%m-%d %H:%M %Z')" >> "$GITHUB_OUTPUT"
+          # first line of the commit message, for the release body (fallback for manual runs)
+          echo "subject=$(printf '%s' "${HEAD_MSG:-Manual build}" | head -1)" >> "$GITHUB_OUTPUT"
+
+      - name: Create release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ steps.meta.outputs.tag }}
+          name: "${{ steps.meta.outputs.date }}"
+          # settings_reset intentionally excluded — recovery-only, grab it from the Actions artifact
+          files: |
+            firmware/lily58_left.uf2
+            firmware/lily58_right.uf2
+          body: |
+            **Commit:** [`${{ github.sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) — ${{ steps.meta.outputs.subject }}
+
+            **Flash:** double-tap reset → drag the matching `.uf2` onto the `NICENANO` drive (left → left half, right → right).
+
+            > Pairing recovery: flash `settings_reset.uf2` (Actions `firmware` artifact) to both halves, then re-flash the files above.

@@ -1,0 +1,187 @@
+# keymap-drawer config — https://github.com/caksoylar/keymap-drawer
+# Renders config/lily58.keymap -> keymap-drawer/lily58.svg in CI (draw-keymaps.yml).
+# Run `keymap dump-config` locally to see every available option and its default.
+#
+# ⚠️ Hand-written — the lily58.svg / lily58.yaml beside it are CI-generated, don't edit those.
+# ⚠️ This file is NOT auto-detected: keymap-drawer only auto-finds `keymap_drawer.config.yaml`
+#    at the repo ROOT. It must be passed explicitly (`-c` locally, `config_path:` in the
+#    workflow) — omit it and the render silently falls back to library defaults.
+
+draw_config:
+  dark_mode: auto # SVG follows the viewer's light/dark preference (GitHub README friendly)
+
+  # ⚠️ RAW XML — HTML entities like &bull; / &amp; are UNDEFINED here and break SVG
+  # parsing (GitHub then 404s the image). ALWAYS use literal unicode chars (•, ⌘, ←…).
+  footer_text: "Lily58 • drawn with keymap-drawer"
+
+  # Legends use plain unicode symbols (below), NOT $$mdi:...$$ icon glyphs — so rendering
+  # needs no network fetch in CI and can never fail on a missing/renamed remote glyph.
+
+  # Extra CSS appended AFTER the built-in light + dark styles, so it wins in both themes.
+  # The @media block re-overrides colors when the viewer is in dark mode.
+  svg_extra_style: |
+    /* --- Modifier keys (⌘⌥⇧⌃): subtle indigo tint so the mod cluster reads as a group --- */
+    rect.mod   { fill: #eef1ff; stroke: #c3cbf7; }
+    /* --- Keys held to reach a layer: warm amber "hold me" accent --- */
+    rect.held  { fill: #fdeecf; stroke: #eccf93; }
+    /* --- Hold legends (homerow-mod symbols, toggle labels): accent colour + weight --- */
+    text.hold  { fill: #4f57c4; font-weight: bold; }
+    /* --- Layer-activator legends (Lower/Raise): accent + bold, keep the underline link --- */
+    text.layer-activator { fill: #0f7c6c; font-weight: bold; }
+    /* --- Rotary encoder stand-in: distinct violet + extra-round corners so it reads as a
+           KNOB, not a key. The ⟳ (top-right) + violet make it obvious across all layers. --- */
+    rect.encoder { fill: #ece6f6; stroke: #bcabde; stroke-width: 1.6; rx: 24; ry: 24; }
+    text.encoder { fill: #74609f; font-weight: bold; }
+    /* Big center icon (the knob's function) + a clearly-visible ⟳ rotary marker below. */
+    text.encoder.tap  { font-size: 1.7em; }
+    text.encoder.hold { font-size: 1.35em; }
+    /* --- Footer: quiet it down --- */
+    text.footer { fill: #8a8f96; }
+
+    @media (prefers-color-scheme: dark) {
+      rect.mod   { fill: #333a5c; stroke: #5866b0; }
+      rect.held  { fill: #6b5327; stroke: #a9853f; }
+      text.hold  { fill: #b4bbff; }
+      text.layer-activator { fill: #58d6c3; }
+      rect.encoder { fill: #3a3350; stroke: #736a97; }
+      text.encoder { fill: #c6bce0; }
+      text.footer { fill: #7e8489; }
+    }
+
+parse_config:
+  zmk_remove_keycode_prefix: ["C_"] # render media keys without the C_ prefix
+
+  # &trans glyph. Default is ▽ — clashed visually with the ▼ Lower layer-activator, so
+  # use □ (empty square = "pass through / nothing here") to keep them distinct.
+  # MUST stay a dict with `type: trans` — that tag adds class="key trans" (the faded/grey
+  # styling); a plain string drops it and trans keys render like normal active keys.
+  trans_legend: {t: "□", type: trans}
+
+  # Layer header + activator legends in the diagram. Keymap display-names are the words
+  # Lower/Raise (readable on the OLED); the drawer shows the compact icon instead.
+  layer_legend_map:
+    Lower: "▼"
+    Raise: "▲"
+
+  # raw_binding_map: prettify whole behavior bindings (params aren't keycodes, so
+  # zmk_keycode_map can't reach them). Bluetooth: profile number on top, "BT" below;
+  # clear gets a ✕. Unicode only (no fragile $$mdi:$$ glyphs), per the note above.
+  raw_binding_map:
+    "&bt BT_SEL 0": "BT 0"
+    "&bt BT_SEL 1": "BT 1"
+    "&bt BT_SEL 2": "BT 2"
+    "&bt BT_SEL 3": "BT 3"
+    "&bt BT_SEL 4": "BT 4"
+    "&bt BT_CLR":   "BT ✕"
+
+    # ROTARY ENCODER stand-in. keymap-drawer can't draw sensor-bindings, so the left
+    # encoder is invisible. The physical encoder sits on this dead switch slot (EC12, no
+    # push button → the keycode never fires); it holds a representative keycode per layer
+    # so the diagram can show what the KNOB does. type "encoder" gets custom knob styling
+    # (svg_extra_style below). ⟳ = "this is the rotary encoder". These 3 keycodes appear
+    # ONLY at the encoder slot, so restyling them here can't hit any real key.
+    "&kp SCROLLLOCK":        {t: "⟳", h: "↕", type: "encoder"}  # Base  = scroll
+    "&kp C_BRIGHTNESS_AUTO": {t: "⟳", h: "☀", type: "encoder"}  # Lower = brightness
+    "&kp K_MUTE":            {t: "⟳", h: "♪", type: "encoder"}  # Raise = volume
+
+    # The two mod-tap thumb keys (tap = arrow, hold = ⌥/⌘). type "mod" is the SAME tag the
+    # standalone modifier keys get from zmk_keycode_map below, so they render identically
+    # (indigo rect.mod fill + the shared text.hold accent) — no separate CSS rule.
+    # The explicit t: is also load-bearing: a mod-tap's params bypass zmk_keycode_map, so
+    # without it the tap legend renders as the literal text "UP ARROW".
+    "&mt LALT UP":   {t: "↑", h: "⌥", type: "mod"}
+    "&mt LGUI DOWN": {t: "↓", h: "⌘", type: "mod"}
+
+  # NOTE: setting zmk_keycode_map REPLACES the built-in default map entirely (it does NOT
+  # merge). So every symbol we want pretty must be listed here — the punctuation block below
+  # re-declares the defaults we rely on. Numbers (N1→1) and F-keys still fall through fine.
+  zmk_keycode_map:
+    # --- Modifiers → Mac glyphs. dict form adds CSS class "mod" to standalone mod keys.
+    # Homerow-mod holds inherit only the tap glyph (⌘ etc.) as their hold legend, so those
+    # letter keys stay un-tinted while thumb/pinky mod keys get the indigo accent.
+    LGUI:  {t: "⌘", type: "mod"}
+    RGUI:  {t: "⌘", type: "mod"}
+    LCMD:  {t: "⌘", type: "mod"}
+    RCMD:  {t: "⌘", type: "mod"}
+    GUI:   {t: "⌘", type: "mod"}
+    LALT:  {t: "⌥", type: "mod"}
+    RALT:  {t: "⌥", type: "mod"}
+    LSHFT: {t: "⇧", type: "mod"}
+    RSHFT: {t: "⇧", type: "mod"}
+    LSHIFT: {t: "⇧", type: "mod"}
+    RSHIFT: {t: "⇧", type: "mod"}
+    LCTRL: {t: "⌃", type: "mod"}
+    RCTRL: {t: "⌃", type: "mod"}
+    LCTL:  {t: "⌃", type: "mod"}
+    RCTL:  {t: "⌃", type: "mod"}
+
+    # --- Navigation / whitespace. Both the SHORT alias AND the FULL ZMK name are listed
+    # for each, so a key renders the icon whether the keymap uses e.g. ESC or ESCAPE,
+    # BSPC or BACKSPACE, APOS or APOSTROPHE. (keymap-drawer normalizes aliases, but
+    # listing both makes it bulletproof against future keymap edits.)
+    ESC:       "⎋"
+    ESCAPE:    "⎋"
+    TAB:       "⇥"
+    BSPC:      "⌫"
+    BACKSPACE: "⌫"
+    BKSP:      "⌫"
+    DEL:       "⌦"
+    DELETE:    "⌦"
+    RET:       "⏎"
+    RETURN:    "⏎"
+    ENTER:     "⏎"
+    SPACE:     "␣"
+    CAPS:      "⇪"
+    CAPSLOCK:  "⇪"
+    APOS:       "'"
+    APOSTROPHE: "'"
+
+    # NOTE: keymap-drawer does NOT parse ZMK sensor-bindings (encoders). Workaround:
+    # the physical encoder sits on a dead switch slot holding a representative keycode
+    # per layer (SCROLLLOCK / C_BRIGHTNESS_AUTO / K_MUTE) — those are restyled as a knob
+    # via raw_binding_map + the .encoder CSS class (see parse_config + svg_extra_style).
+
+    # --- Arrow cluster
+    LEFT:  "←"
+    DOWN:  "↓"
+    UP:    "↑"
+    RIGHT: "→"
+
+    # --- Punctuation / symbols (re-declared because the map replaces defaults)
+    EXCL: "!"
+    AT: "@"
+    HASH: "#"
+    DOLLAR: "$"
+    DLLR: "$"
+    PRCNT: "%"
+    CARET: "^"
+    AMPS: "&"
+    ASTRK: "*"
+    STAR: "*"
+    KP_MULTIPLY: "×"
+    KP_PLUS: "+"
+    PLUS: "+"
+    MINUS: "-"
+    UNDER: "_"
+    UNDERSCORE: "_"
+    EQUAL: "="
+    LPAR: "("
+    RPAR: ")"
+    LBKT: "["
+    RBKT: "]"
+    LBRC: "{"
+    RBRC: "}"
+    SEMI: ";"
+    COLON: ":"
+    SQT: "'"
+    DQT: "\""
+    COMMA: ","
+    DOT: "."
+    LT: "<"
+    GT: ">"
+    FSLH: "/"
+    QMARK: "?"
+    BSLH: "\\"
+    PIPE: "|"
+    GRAVE: "`"
+    TILDE: "~"

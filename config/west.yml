@@ -2,10 +2,22 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    # Custom nice!view widgets. Repo is named "oled" but its `nice_epaper`
+    # shield is the nice!view one — see docs/zmk-nice-oled.md.
+    - name: mctechnology17
+      url-base: https://github.com/mctechnology17
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: v0.3
       import: app/west.yml
+    # Pinned to a sha, never `main`: the module has no tag matching its current
+    # state (v0.0.2 predates the unreleased v0.0.3 fixes that live on main), and
+    # a moving branch would silently change the firmware. This sha IS main's HEAD
+    # as of 2026-08-07. ZMK v0.3 ONLY — the module does not build on Zephyr 4.1
+    # (LVGL 9.3), so it blocks any future ZMK v0.4 bump. Upstream issue #22.
+    - name: zmk-nice-oled
+      remote: mctechnology17
+      revision: 46f824abb2bd41f1287c5c68abd14122af6042a3
   self:
     path: config
